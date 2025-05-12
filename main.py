@@ -7,6 +7,14 @@ import uvicorn
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Accept requests from any domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class data_sent(BaseModel):
     battery_power :  int
     fc            :  int
@@ -35,8 +43,10 @@ async def predicted_category(user_values : data_sent):
     prediction = model.predict(input_array)
 
     if prediction[0] == 0:
-        return "low"
+        result = "low"
     elif prediction[0] == 1:
-        return "Medium"
+        result = "Medium"
     else:
-        return "High"
+        result = "High"
+        
+    return {"prediction": result}
