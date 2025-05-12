@@ -23,7 +23,10 @@ class data_sent(BaseModel):
 
 with open("xgbClassifier.pkl","rb") as model:
     model = pickle.load(model)
-
+@app.get("/")
+def read_root():
+    return "Success ✅: Your app is functioning properly"
+    
 @app.post("/predict_model")
 async def predicted_category(user_values : data_sent):
     input_array =  np.array([list(user_values.dict().values())])
