@@ -32,8 +32,13 @@ class data_sent(BaseModel):
 
 with open("xgbClassifier.pkl","rb") as model:
     model = pickle.load(model)
-@app.get("/")
 
+@app.get("/predict_model/monitor")
+def monitor_prediction_route():
+    return {"status": "up", "message": "Monitor check successful"}
+
+
+@app.get("/")
 def read_root():
     return "Success ✅: Your app is functioning properly"
     
